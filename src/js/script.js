@@ -103,70 +103,70 @@ function main(){
     userAgent = navigator.userAgent.toLowerCase(),
     isIE = userAgent.indexOf("msie") !== -1 ? parseInt(userAgent.split("msie")[1], 10) : userAgent.indexOf("trident") !== -1 ? 11 : userAgent.indexOf("edge") !== -1 ? 12 : false;
 
-// Unsupported browsers
-if (isIE !== false && isIE < 12) {
-    console.warn("[Core] detected IE" + isIE + ", load alert");
-    var script = document.createElement("script");
-    script.src = "./js/support.js";
-    document.querySelector("head").appendChild(script);
-}
+    // Unsupported browsers
+    if (isIE !== false && isIE < 12) {
+        console.warn("[Core] detected IE" + isIE + ", load alert");
+        var script = document.createElement("script");
+        script.src = "./js/support.js";
+        document.querySelector("head").appendChild(script);
+    }
 
-let
-    initialDate = new Date(),
+    let
+        initialDate = new Date(),
 
-    $document = $(document),
-    $window = $(window),
-    $html = $("html"),
+        $document = $(document),
+        $window = $(window),
+        $html = $("html"),
 
-    isDesktop = $html.hasClass("desktop"),
-    isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-    isNoviBuilder,
+        isDesktop = $html.hasClass("desktop"),
+        isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
+        isNoviBuilder,
 
-    plugins = {
-        rdInputLabel:            $(".form-label"),
-        rdNavbar:                $(".rd-navbar"),
-        regula:                  $("[data-constraints]"),
-        swiper:                  $('.swiper-container'),
-        isotope:                 $(".isotope-wrap"),
-        customToggle:            $("[data-custom-toggle]"),
-        rdMailForm:              $(".rd-mailform"),
-        materialParallax:        $(".parallax-container"),
-        copyrightYear:           $('.copyright-year'),
-        wow:                     $('.wow'),
-        maps:                    $(".google-map-container"),
-        lightGallery:            $("[data-lightgallery='group']"),
-        lightGalleryItem:        $("[data-lightgallery='item']"),
-        lightDynamicGalleryItem: $("[data-lightgallery='dynamic']")
-    };
+        plugins = {
+            rdInputLabel:            $(".form-label"),
+            rdNavbar:                $(".rd-navbar"),
+            regula:                  $("[data-constraints]"),
+            swiper:                  $('.swiper-container'),
+            isotope:                 $(".isotope-wrap"),
+            customToggle:            $("[data-custom-toggle]"),
+            rdMailForm:              $(".rd-mailform"),
+            materialParallax:        $(".parallax-container"),
+            copyrightYear:           $('.copyright-year'),
+            wow:                     $('.wow'),
+            maps:                    $(".google-map-container"),
+            lightGallery:            $("[data-lightgallery='group']"),
+            lightGalleryItem:        $("[data-lightgallery='item']"),
+            lightDynamicGalleryItem: $("[data-lightgallery='dynamic']")
+        };
 
-/**
- * @desc Check the element was been scrolled into the view
- * @param {object} elem - jQuery object
- * @return {boolean}
- */
-function isScrolledIntoView(elem) {
-    if (isNoviBuilder) return true;
-    return elem.offset().top + elem.outerHeight() >= $window.scrollTop() && elem.offset().top <= $window.scrollTop() + $window.height();
-}
+    /**
+     * @desc Check the element was been scrolled into the view
+     * @param {object} elem - jQuery object
+     * @return {boolean}
+     */
+    function isScrolledIntoView(elem) {
+        if (isNoviBuilder) return true;
+        return elem.offset().top + elem.outerHeight() >= $window.scrollTop() && elem.offset().top <= $window.scrollTop() + $window.height();
+    }
 
-/**
- * @desc Calls a function when element has been scrolled into the view
- * @param {object} element - jQuery object
- * @param {function} func - init function
- */
-function lazyInit(element, func) {
-    let scrollHandler = function () {
-        if ((!element.hasClass('lazy-loaded') && (isScrolledIntoView(element)))) {
-            func.call(element);
-            element.addClass('lazy-loaded');
-        }
-    };
+    /**
+     * @desc Calls a function when element has been scrolled into the view
+     * @param {object} element - jQuery object
+     * @param {function} func - init function
+     */
+    function lazyInit(element, func) {
+        let scrollHandler = function () {
+            if ((!element.hasClass('lazy-loaded') && (isScrolledIntoView(element)))) {
+                func.call(element);
+                element.addClass('lazy-loaded');
+            }
+        };
 
-    scrollHandler();
-    $window.on('scroll', scrollHandler);
-}
+        scrollHandler();
+        $window.on('scroll', scrollHandler);
+    }
 
-/**
+    /**
      * Wrapper to eliminate json errors
      * @param {string} str - JSON string
      * @returns {object} - parsed or empty object
@@ -201,6 +201,73 @@ function lazyInit(element, func) {
         for (let i = 0; i < swipersBg.length; i++) {
             let swiperBg = swipersBg[i];
             swiperBg.style.backgroundImage = 'url(' + swiperBg.getAttribute('data-slide-bg') + ')';
+        }
+    }
+
+    /**
+     * @desc Initialize the gallery with set of images
+     * @param {object} itemsToInit - jQuery object
+     * @param {string} [addClass] - additional gallery class
+     */
+    function initLightGallery(itemsToInit, addClass) {
+        if (!isNoviBuilder) {
+            $(itemsToInit).lightGallery({
+                thumbnail: $(itemsToInit).attr("data-lg-thumbnail") !== "false",
+                selector:  "[data-lightgallery='item']:not(.swiper-slide-duplicate)",
+                autoplay:  $(itemsToInit).attr("data-lg-autoplay") === "true",
+                pause:     parseInt($(itemsToInit).attr("data-lg-autoplay-delay")) || 5000,
+                addClass:  addClass,
+                mode:      $(itemsToInit).attr("data-lg-animation") || "lg-slide",
+                loop:      $(itemsToInit).attr("data-lg-loop") !== "false"
+            });
+        }
+    }
+
+    /**
+     * @desc Initialize the gallery with dynamic addition of images
+     * @param {object} itemsToInit - jQuery object
+     * @param {string} [addClass] - additional gallery class
+     */
+    function initDynamicLightGallery(itemsToInit, addClass) {
+        if (!isNoviBuilder) {
+            $(itemsToInit).on("click", function () {
+                $(itemsToInit).lightGallery({
+                    thumbnail: $(itemsToInit).attr("data-lg-thumbnail") !== "false",
+                    selector:  "[data-lightgallery='item']",
+                    autoplay:  $(itemsToInit).attr("data-lg-autoplay") === "true",
+                    pause:     parseInt($(itemsToInit).attr("data-lg-autoplay-delay")) || 5000,
+                    addClass:  addClass,
+                    mode:      $(itemsToInit).attr("data-lg-animation") || "lg-slide",
+                    loop:      $(itemsToInit).attr("data-lg-loop") !== "false",
+                    dynamic:   true,
+                    dynamicEl: JSON.parse($(itemsToInit).attr("data-lg-dynamic-elements")) || []
+                });
+            });
+        }
+    }
+
+    /**
+     * @desc Initialize the gallery with one image
+     * @param {object} itemToInit - jQuery object
+     * @param {string} [addClass] - additional gallery class
+     */
+    function initLightGalleryItem(itemToInit, addClass) {
+        if (!isNoviBuilder) {
+            $(itemToInit).lightGallery({
+                selector:            "this",
+                addClass:            addClass,
+                counter:             false,
+                youtubePlayerParams: {
+                    modestbranding: 1,
+                    showinfo:       0,
+                    rel:            0,
+                    controls:       0
+                },
+                vimeoPlayerParams:   {
+                    byline:   0,
+                    portrait: 0
+                }
+            });
         }
     }
 
@@ -262,31 +329,31 @@ function lazyInit(element, func) {
         }
     }
 
-// Custom made
+    // Custom made
 
-function readUrl(nextFilter, rostock){
-    // Modify url
-    let currentUrl = location.href;
-    let nextUrl;
+    function readUrl(nextFilter, rostock){
+        // Modify url
+        let currentUrl = location.href;
+        let nextUrl;
 
-    if(!currentUrl.includes("?")){
-        nextUrl = currentUrl + "?cat=" + nextFilter + "&rostock=" + rostock;
-    }else{
-        nextUrl = currentUrl.split("?")[0] + "?cat=" + nextFilter + "&rostock=" + rostock
-    }
-
-    if (setNextUrl(nextUrl)) {   
-        // Set correct active
-        let filter = document.querySelectorAll('[data-isotope-filter="' + nextFilter + '"]')
-        if(filter.length > 0){
-            filter[0].classList.add('active');
-            if(filter.length > 1){
-                filter[1].classList.add('active');
-            }
+        if(!currentUrl.includes("?")){
+            nextUrl = currentUrl + "?cat=" + nextFilter + "&rostock=" + rostock;
+        }else{
+            nextUrl = currentUrl.split("?")[0] + "?cat=" + nextFilter + "&rostock=" + rostock
         }
-        document.getElementById('cat-btn').innerHTML = formatCatBtnText(nextFilter);
+
+        if (setNextUrl(nextUrl)) {   
+            // Set correct active
+            let filter = document.querySelectorAll('[data-isotope-filter="' + nextFilter + '"]')
+            if(filter.length > 0){
+                filter[0].classList.add('active');
+                if(filter.length > 1){
+                    filter[1].classList.add('active');
+                }
+            }
+            document.getElementById('cat-btn').innerHTML = formatCatBtnText(nextFilter);
+        }
     }
-}
 
 
 // Triggers when page is loaded, returns correct filter and sets correct button as active
@@ -416,10 +483,19 @@ $document.ready(async function () {
                     let images_HTML = "";
                     let images_array = imagesdetail.split("/");
                     for(let i = 0; i < images_array.length; i++){
-                        images_HTML += `<div class="swiper-slide swiper-slide-overlay-disable" ><img src="${src+images_array[i]}"/></div>`
+                        if(images_array[i].includes("mp4")){
+                            images_HTML += `
+                            <div class="swiper-slide swiper-slide-overlay-disable" >
+                            <video muted autoplay loop>
+                            <source src="${src+images_array[i]}" type="video/mp4">
+                            Your browser does not support HTML video.
+                          </video></div>`
+                        }
+                        else{
+                            images_HTML += `<div class="swiper-slide swiper-slide-overlay-disable" data-lightgallery="item" href="${src+images_array[i]}" ><img src="${src+images_array[i]}"/></div>`
+                        }
                     }
                     document.getElementById('detail-swiper').innerHTML = images_HTML;
-
 
                     let bulletpoints_HTML = "";
                     let bulletpoints_array = bulletpoints.split("/");
@@ -483,7 +559,7 @@ $document.ready(async function () {
                     </div>`
                 }
 
-                document.getElementById('isotope-gallery').innerHTML = htmlCode;          
+                document.getElementById('isotope-gallery').innerHTML = htmlCode;       
         })
       .catch(error => console.log(error));
     }
@@ -543,6 +619,43 @@ $document.ready(async function () {
                     
                 }
             }
+
+            // lightGallery
+            if (plugins.lightGallery.length) {
+                for (let i = 0; i < plugins.lightGallery.length; i++) {
+                    initLightGallery(plugins.lightGallery[i]);
+                }
+            }
+
+            // // lightGallery item
+            // if (plugins.lightGalleryItem.length) {
+
+            //     // Filter carousel items
+            //     let notCarouselItems = [];
+            
+            //     for (let z = 0; z < plugins.lightGalleryItem.length; z++) {
+            //         if (!$(plugins.lightGalleryItem[z]).parents('.owl-carousel').length &&
+            //             !$(plugins.lightGalleryItem[z]).parents('.swiper-slider').length &&
+            //             !$(plugins.lightGalleryItem[z]).parents('.slick-slider').length) {
+            //             notCarouselItems.push(plugins.lightGalleryItem[z]);
+            //         }
+            //     }
+            
+            //     plugins.lightGalleryItem = notCarouselItems;
+            
+            //     for (let i = 0; i < plugins.lightGalleryItem.length; i++) {
+            //         initLightGalleryItem(plugins.lightGalleryItem[i]);
+            //     }
+            // }
+
+            // // Dynamic lightGallery
+            // if (plugins.lightDynamicGalleryItem.length) {
+            //     for (let i = 0; i < plugins.lightDynamicGalleryItem.length; i++) {
+            //         initDynamicLightGallery(plugins.lightDynamicGalleryItem[i]);
+            //     }
+            // }
+            
+        
         });
     }
 
@@ -662,74 +775,6 @@ $document.ready(function () {
 
     isNoviBuilder = window.xMode;
 
-    
-
-    /**
-     * @desc Initialize the gallery with set of images
-     * @param {object} itemsToInit - jQuery object
-     * @param {string} [addClass] - additional gallery class
-     */
-    function initLightGallery(itemsToInit, addClass) {
-        if (!isNoviBuilder) {
-            $(itemsToInit).lightGallery({
-                thumbnail: $(itemsToInit).attr("data-lg-thumbnail") !== "false",
-                selector:  "[data-lightgallery='item']",
-                autoplay:  $(itemsToInit).attr("data-lg-autoplay") === "true",
-                pause:     parseInt($(itemsToInit).attr("data-lg-autoplay-delay")) || 5000,
-                addClass:  addClass,
-                mode:      $(itemsToInit).attr("data-lg-animation") || "lg-slide",
-                loop:      $(itemsToInit).attr("data-lg-loop") !== "false"
-            });
-        }
-    }
-
-    /**
-     * @desc Initialize the gallery with dynamic addition of images
-     * @param {object} itemsToInit - jQuery object
-     * @param {string} [addClass] - additional gallery class
-     */
-    function initDynamicLightGallery(itemsToInit, addClass) {
-        if (!isNoviBuilder) {
-            $(itemsToInit).on("click", function () {
-                $(itemsToInit).lightGallery({
-                    thumbnail: $(itemsToInit).attr("data-lg-thumbnail") !== "false",
-                    selector:  "[data-lightgallery='item']",
-                    autoplay:  $(itemsToInit).attr("data-lg-autoplay") === "true",
-                    pause:     parseInt($(itemsToInit).attr("data-lg-autoplay-delay")) || 5000,
-                    addClass:  addClass,
-                    mode:      $(itemsToInit).attr("data-lg-animation") || "lg-slide",
-                    loop:      $(itemsToInit).attr("data-lg-loop") !== "false",
-                    dynamic:   true,
-                    dynamicEl: JSON.parse($(itemsToInit).attr("data-lg-dynamic-elements")) || []
-                });
-            });
-        }
-    }
-
-    /**
-     * @desc Initialize the gallery with one image
-     * @param {object} itemToInit - jQuery object
-     * @param {string} [addClass] - additional gallery class
-     */
-    function initLightGalleryItem(itemToInit, addClass) {
-        if (!isNoviBuilder) {
-            $(itemToInit).lightGallery({
-                selector:            "this",
-                addClass:            addClass,
-                counter:             false,
-                youtubePlayerParams: {
-                    modestbranding: 1,
-                    showinfo:       0,
-                    rel:            0,
-                    controls:       0
-                },
-                vimeoPlayerParams:   {
-                    byline:   0,
-                    portrait: 0
-                }
-            });
-        }
-    }
 
     /**
      * @desc Google map function for getting latitude and longitude
@@ -1108,11 +1153,9 @@ $document.ready(function () {
     }
 
     // Swiper
-    if(window.location.href.includes("index")){
+    if(window.location.href.includes("index") || window.location.href.includes("on-display")){
         if (plugins.swiper.length) {
-
             for (let i = 0; i < plugins.swiper.length; i++) {
-
                 let
                     node = plugins.swiper[i],
                     params = parseJSON(node.getAttribute('data-swiper')),
@@ -1131,7 +1174,7 @@ $document.ready(function () {
                             prevEl: '.swiper-button-prev'
                         },
                         autoplay: {
-                            delay: 5000
+                            delay: window.location.href.includes("index") ? 5000 : 10000000
                         }
                     },
                     xMode = {
@@ -1139,7 +1182,6 @@ $document.ready(function () {
                         loop: false,
                         simulateTouch: false
                     };
-
                 params.on = {
                     init: function () {
                         setBackgrounds(this);
@@ -1156,6 +1198,17 @@ $document.ready(function () {
                 new Swiper(node, isNoviBuilder ?  {...defaults, ...params, ...xMode} :  {...defaults, ...params} );              
             }
         }
+        
+        if(window.location.href.includes("on-display")) {
+            // lightGallery
+            if (plugins.lightGallery.length) {
+                for (let i = 0; i < plugins.lightGallery.length; i++) {
+                    initLightGallery(plugins.lightGallery[i]);
+                }
+            }
+        }
+         
+
     }
     
 
@@ -1409,39 +1462,9 @@ $document.ready(function () {
         lazyInit(plugins.maps, initMaps);
     }
 
-    // lightGallery
-    if (plugins.lightGallery.length) {
-        for (let i = 0; i < plugins.lightGallery.length; i++) {
-            initLightGallery(plugins.lightGallery[i]);
-        }
-    }
+    
+    
 
-    // lightGallery item
-    if (plugins.lightGalleryItem.length) {
-        // Filter carousel items
-        let notCarouselItems = [];
-
-        for (let z = 0; z < plugins.lightGalleryItem.length; z++) {
-            if (!$(plugins.lightGalleryItem[z]).parents('.owl-carousel').length &&
-                !$(plugins.lightGalleryItem[z]).parents('.swiper-slider').length &&
-                !$(plugins.lightGalleryItem[z]).parents('.slick-slider').length) {
-                notCarouselItems.push(plugins.lightGalleryItem[z]);
-            }
-        }
-
-        plugins.lightGalleryItem = notCarouselItems;
-
-        for (let i = 0; i < plugins.lightGalleryItem.length; i++) {
-            initLightGalleryItem(plugins.lightGalleryItem[i]);
-        }
-    }
-
-    // Dynamic lightGallery
-    if (plugins.lightDynamicGalleryItem.length) {
-        for (let i = 0; i < plugins.lightDynamicGalleryItem.length; i++) {
-            initDynamicLightGallery(plugins.lightDynamicGalleryItem[i]);
-        }
-    }
 });
 }
 }());

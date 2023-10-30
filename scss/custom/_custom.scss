@@ -296,7 +296,7 @@
 
 
 // Project-detail
-.project-detail{
+.project-detail, .on-display{
   @media screen and (max-width: 1200px) {
     .swiper-container{
       height: 65vh !important;
@@ -312,4 +312,9 @@
   .font-accent{
     color: #696969;
   }
+}
+
+video{
+
+  height: 70vh;
 }

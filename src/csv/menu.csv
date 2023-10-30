@@ -1,8 +1,7 @@
 Home;index.html
-About me;about-me.html
 Portfolio;Portfolio;portfolio.html?cat=.masterpieces&rostock=n
 Portfolio;Master Pieces;portfolio.html?cat=.masterpieces&rostock=n
-Portfolio;Projects;portfolio.html?cat=.projects&rostck=y
 Portfolio;Custom;portfolio.html?cat=.custom&rostock=y
 Portfolio;Circles;portfolio.html?cat=.circles&rostock=n
-On display;on-display.html
+About me;about-me.html
+On-Display;on-display.html
