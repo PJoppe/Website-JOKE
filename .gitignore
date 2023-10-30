@@ -1,0 +1,8 @@
+.DS_Store
+/.idea
+/.vscode
+/node_modules
+src/js/bootstrap.bundle.min.js
+/src/css/custom/style.css
+/src/css/bootstrap
+/dist

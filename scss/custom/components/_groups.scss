@@ -1,0 +1,42 @@
+// Element groups
+// --------------------------------------------------
+
+html{
+  .group{
+    @include group(15px, 15px);
+  }
+
+  .group-xs{
+    @include group(5px, 5px);
+  }
+
+  .group-sm{
+    @include group(10px, 10px);
+  }
+
+  .group-lg{
+    @include group(20px, 20px);
+  }
+
+  .group-xl{
+    @include group(30px, 30px);
+  }
+
+  .group-top{
+    > *, > *:first-child {
+      vertical-align: top;
+    }
+  }
+
+  .group-middle{
+    > *, > *:first-child {
+      vertical-align: middle;
+    }
+  }
+
+  .group-bottom{
+    > *, > *:first-child {
+      vertical-align: bottom;
+    }
+  }
+}

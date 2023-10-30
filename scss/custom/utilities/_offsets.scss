@@ -1,0 +1,118 @@
+//
+// Offsets
+// --------------------------------------------------
+
+
+// Insets
+// -------------------------
+
+$insets: (0, 20px, 30px, 50px, 80px, 100px, 115px);
+
+html .page{
+  @include indent-responsive(inset, left, padding-left, $grid-breakpoints, $insets);
+  @include indent-responsive(inset, right, padding-right, $grid-breakpoints, $insets);
+}
+
+
+// Elements
+// -------------------------
+.inset-left-7p{
+  padding-left: 7%;
+}
+.inset-right-7p{
+  padding-right: 7%;
+}
+
+.inset-left-11p{
+  padding-left: 11%;
+}
+
+.inset-right-11p{
+  padding-right: 11%;
+}
+
+// Responsive
+// -------------------------
+
+html .page {
+  * + .offset-top-0 {
+    margin-top: 0;
+  }
+
+  * + .offset-top-10 {
+    margin-top: 10px;
+  }
+
+  * + .offset-top-20 {
+    margin-top: 20px;
+  }
+
+  * + .offset-top-24 {
+    margin-top: 24px;
+  }
+
+  * + .offset-top-30 {
+    margin-top: 30px;
+  }
+
+  * + .offset-top-34,
+  .offset-top-34 {
+    margin-top: 34px;
+  }
+
+  * + .offset-top-41 {
+    margin-top: 41px;
+  }
+
+  * + .offset-top-50 {
+    margin-top: 50px;
+  }
+
+  * + .offset-top-66 {
+    margin-top: 66px;
+  }
+
+  * + .offset-top-98 {
+    margin-top: 98px;
+  }
+
+  @include media-breakpoint-up(md) {
+    * + .offset-md-top-0 {
+      margin-top: 0;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    * + .offset-lg-top-0 {
+      margin-top: 0;
+    }
+
+    * + .offset-lg-top-41 {
+      margin-top: 41px;
+    }
+
+    * + .offset-lg-top-50 {
+      margin-top: 50px;
+    }
+  }
+
+  @include media-breakpoint-up(xl) {
+    * + .offset-xl-top-0 {
+      margin-top: 0;
+    }
+
+    * + .offset-xl-top-30 {
+      margin-top: 30px;
+    }
+  }
+
+  @include media-breakpoint-up(xxl) {
+    * + .offset-xxl-top-0 {
+      margin-top: 0;
+    }
+
+    * + .offset-xxl-top-66 {
+      margin-top: 66px;
+    }
+  }
+}

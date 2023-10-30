@@ -1,0 +1,195 @@
+
+// SHARED
+.rd-navbar-panel{
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px !important;
+}
+
+
+// INDEX ONLY
+.index-page{
+  //@media (pointer:none), (pointer:coarse) {
+    //overflow: hidden !important;
+    // max-height: 100vh !important;
+    // height: 100% !important;
+    // .page, .page-content{
+    //   max-height: 100vh !important;
+    //   height: 100% !important;
+    //   .swiper-container{
+    //     max-height: 100vh !important;
+    //     height: 100% !important;
+    //   }
+    // }
+  //}
+  
+ // @media screen and (min-width:0px) {
+    %rd-navbar-default-search-lg{
+      .rd-navbar-search-form {
+        left: 0;
+        right: 0;
+        .form-label {
+          font-size: 32px;
+          padding-left: 85px;
+          left: 16px;
+          &.focus {
+            font-size: 18px;
+            top: 10px;
+          }
+        }
+      }
+    }
+  
+    .rd-navbar-sidebar-toggle {
+      &.rd-navbar-fixed {
+        // @extend %rd-navbar-default-mobile-menu;
+        // @extend %rd-navbar-default-cart-aside-right;
+        // @extend %rd-navbar-default-aside-left;
+        // @extend %rd-navbar-default-mobile-search;
+        // @extend %rd-navbar-sidebar-toggle-panel;
+        // @extend %rd-navbar-sidebar-toggle-footer;
+  
+        .rd-navbar-nav-wrap {
+          width: 315px;
+          padding: 0;
+        }
+  
+        .rd-navbar-mobile-brand {
+          margin-top: 30px;
+          margin-left: 14px;
+          text-align: left;
+        }
+  
+        .form-search-wrap {
+          margin-top: 50px;
+        }
+  
+        .rd-navbar-mobile-scroll{
+          padding: 0 20px;
+          overflow-y: hidden;
+          max-height: inherit;
+        }
+  
+        .rd-navbar-nav {
+          margin-top: 90px;
+        }
+        .rd-navbar-megamenu {
+          padding-left: 0;
+        }
+        .resp-tab-item{
+          display: none;
+        }
+      }
+    }
+    // .rd-navbar-sidebar-toggle {
+    //   &.rd-navbar-dark {
+    //     // Mobile Fixed Layout Colors
+    //     &.rd-navbar-fixed {
+    //       // @include media-breakpoint-up(xl) {
+    //       // }
+    //     }
+    //   }
+    // }
+    // .rd-navbar-sidebar-toggle {
+    //   &.rd-navbar-light {
+    //     // Mobile Fixed Layout Colors
+    //     &.rd-navbar-fixed {
+    //       // @include media-breakpoint-up(xl) {
+    //       // }
+    //     }
+    //   }
+    // }
+  
+    %rd-navbar-sidebar-toggle-panel{
+      .rd-navbar-panel{
+        position: static;
+      }
+      &, .rd-navbar-panel{
+        height: 0;
+      }
+      .rd-navbar-toggle{
+        background: none;
+        border: none;
+        outline: none;
+        padding: 0;
+        top: 48px;
+        left: 40px;
+        //@include toggle-icons-via-rotation(48px, 24px, $white, '\f0c9', '\f69a', 'FontAwesome');
+        text-shadow: 0 0 1px $black;
+        &.active{
+          left: 355px;
+        }
+      }
+    }
+  
+    %rd-navbar-sidebar-toggle-panel-dark{
+      .rd-navbar-panel{
+        background-color: transparent;
+        box-shadow: none;
+      }
+    }
+  
+    %rd-navbar-sidebar-toggle-panel-light{
+      .rd-navbar-panel{
+        background-color: transparent;
+        box-shadow: none;
+      }
+    }
+  }
+
+  %rd-navbar-sidebar-toggle-panel-light{  
+    @include media-breakpoint-down(xs) {
+      .rd-navbar-toggle{
+        @include toggle-lines-to-arrow(48px, 24px, white);
+      }
+    }
+  }
+  %rd-navbar-sidebar-toggle-panel-dark{  
+     @include media-breakpoint-down(xs) {
+      .rd-navbar-toggle{
+        @include toggle-lines-to-arrow(48px, 24px, white);
+      }
+    }
+  }
+
+// NOT INDEX
+.not-index-page{
+  %rd-navbar-sidebar-toggle-panel-light{  
+    @include media-breakpoint-up(xs) {
+      .rd-navbar-toggle{
+        @include toggle-lines-to-arrow(48px, 24px, $gray-900);
+      }
+    }
+  }
+  %rd-navbar-sidebar-toggle-panel-dark{  
+    @include media-breakpoint-up(xs) {
+      .rd-navbar-toggle{
+        @include toggle-lines-to-arrow(48px, 24px, white);
+      }
+    }
+  }
+
+  .rd-navbar-toggle{
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  .rd-navbar-menu-wrap{
+    .rd-navbar-nav-wrap{
+      overflow: hidden !important;
+      .rd-navbar-mobile-scroll-holder{
+        .rd-navbar-mobile-scroll{
+          #nav-content{
+            height: calc(100vh - 80px ) !important;
+            display: flex;
+            flex-direction: column;
+            @media (pointer:none), (pointer:coarse) {
+              padding-bottom: 70px;
+            }
+          }
+        }
+      
+      }
+    }
+  }
+}
+ 
+  
