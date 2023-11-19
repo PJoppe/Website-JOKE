@@ -218,7 +218,15 @@ function main(){
                 pause:     parseInt($(itemsToInit).attr("data-lg-autoplay-delay")) || 5000,
                 addClass:  addClass,
                 mode:      $(itemsToInit).attr("data-lg-animation") || "lg-slide",
-                loop:      $(itemsToInit).attr("data-lg-loop") !== "false"
+                loop:      $(itemsToInit).attr("data-lg-loop") !== "false",
+                controls:  true,
+                share:     false,
+                copy:      false,
+                zoom:      false,
+                fullScreen:false,
+                autoplayControls :  false,
+                download:  false
+
             });
         }
     }
