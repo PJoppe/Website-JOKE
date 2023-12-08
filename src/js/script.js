@@ -4,7 +4,8 @@
 (function () {
     // CONSTs
     let filters = [];
-    let baseFolder = window.location.href.includes("localhost") ? "/" : "/WebsiteJoke/" ;
+    //let baseFolder = window.location.href.includes("localhost") ? "/" : "/WebsiteJoke/" ;
+    let baseFolder = "";
     const url = baseFolder + "csv/portfolio.csv";
 
     let currentPage = window.location.href.split("/");
@@ -88,7 +89,7 @@ function afterGetMenu(data){
       </div>
       <ul class="list-inline">
         <li class="list-inline-item"><a class="icon fa fa-instagram  icon-xxs icon-circle icon-darker-filled"  target="_blank" href="https://www.instagram.com/jokeverrelst_art"></a></li>
-        <li class="list-inline-item"><a class="icon fa fa-facebook icon-xxs icon-circle icon-darker-filled" href="https://www.facebook.com/JokeVerrelstArt/"></a></li>
+        <li class="list-inline-item"><a class="icon fa fa-facebook icon-xxs icon-circle icon-darker-filled" target="_blank" href="https://www.facebook.com/JokeVerrelstArt/"></a></li>
         <!-- <li class="list-inline-item"><a class="icon fa fa-twitter icon-xxs icon-circle icon-darker-filled" href="#"></a></li> -->
         <!-- <li class="list-inline-item"><a class="icon fa fa-google-plus icon-xxs icon-circle icon-darker-filled" href="#"></a></li> -->
         <!-- <li class="list-inline-item"><a class="icon fa fa-500px icon-xxs icon-circle icon-darker-filled" href="#"></a></li> -->
@@ -1161,7 +1162,7 @@ $document.ready(function () {
     }
 
     // Swiper
-    if(window.location.href.includes("index") || window.location.href.includes("on-display")){
+    if(!window.location.href.includes("project-detail")){
         if (plugins.swiper.length) {
             for (let i = 0; i < plugins.swiper.length; i++) {
                 let
